@@ -11,5 +11,15 @@ module.exports = {
     createUserModel: (user) => {
         console.log(user)
         return db('users').insert(user)
+    },
+    updateUserModel: (userId, toUpdate)=>{
+        return db('users')
+                .where({ "id": userId})
+                .update(toUpdate)
+    },
+    deleteUserModel: (userId)=>{
+        return db('users')
+                .where({ "id": userId})
+                .del()
     }
 }

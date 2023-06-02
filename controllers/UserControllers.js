@@ -19,9 +19,25 @@ module.exports = {
         // console.log(body)
         UserModels
             .createUserModel(body)
-            .then(result=> res.send(result))
+            .then(result => res.send(result))
             .catch(error => next(error))
-     
+
+    },
+    updateUser: (req, res, next) => {
+        const { body } = req
+        const { id } = req.params
+        // console.log(body)
+        UserModels
+            .updateUserModel(id, body)
+            .then(result => res.status(201).json(result))
+            .catch(error => next(error))
+    },
+    deleteUser: (req, res) => {
+        let { id } = req.params
+        UserModels
+            .deleteUserModel(id)
+            .then(results => res.status(201).json(results))
+            .catch(err => res.status(500).json(err))
     },
     getNumbers: (req, res) => {
         let numbers = req.params
