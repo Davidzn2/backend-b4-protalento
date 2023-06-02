@@ -1,16 +1,27 @@
+const { UserModels } = require('../models')
 
 module.exports = {
     getUsers: (req, res) => {
-        let user = req.query
-        console.log(user)
-        res.json({
-            username: user
-        })
+        UserModels
+            .getAllUsersModel()
+            .then(results => res.status(201).json(results))
+            .catch(err => res.status(500).json(err))
     },
-    createUser: (req, res) => {
+    getOneUser: (req, res) => {
+        let { id } = req.params
+        UserModels
+            .getOneUsersModel(id)
+            .then(results => res.status(201).json(results))
+            .catch(err => res.status(500).json(err))
+    },
+    createUser: (req, res, next) => {
         const { body } = req
-        console.log(body.password)
-        res.status(201).json(body)
+        // console.log(body)
+        UserModels
+            .createUserModel(body)
+            .then(result=> res.send(result))
+            .catch(error => next(error))
+     
     },
     getNumbers: (req, res) => {
         let numbers = req.params
